@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -80,5 +81,10 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function catalogo(){
+        $vehiculos = Vehicle::where('vehicleState', 'availabled')->get();
+
+        return view('welcome', compact('vehiculos'));
     }
 }

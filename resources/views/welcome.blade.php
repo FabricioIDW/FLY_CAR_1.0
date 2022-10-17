@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -129,8 +129,28 @@
             </div>
         </div>
     </body>
-</html> --}}
+</html>  --}}
 {{-- @extends('layouts.plantilla')
 @section('title', 'Principal')
 @section('content')
 @endsection
+--}}
+
+@extends('layouts.plantilla')
+@section('content')
+<div class="bg-orange-300">
+    <div class="titulos">FLY<br>CAR</div>
+    {{--<a href="{{route('productos.index')}}">Index Productos</a> --}}
+    
+    <div class="scroll-container">
+        <div class="columns-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-auto space-x-1 space-y-1">
+            @foreach ($vehiculos as $veh)
+                <img src="{{$veh->image}}">
+             @endforeach
+        </div>
+    </div>
+    <div class="text-center text-2xl">Sobre nosotros - FLY Car corporations - Ayuda</div>
+</div>
+@endsection
+
+

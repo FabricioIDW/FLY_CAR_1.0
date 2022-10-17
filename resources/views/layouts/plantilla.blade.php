@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+    @vite('resources/css/app.css')
+    {{-- <script src="https://cdn.tailwindcss.com"></script>  --}}
     <style>
         .active{
             color: red;
@@ -14,8 +15,8 @@
     </style>
 </head>
 <body>
-    @include('layouts.partials.header')
+    {{-- @include('layouts.partials.header') --}}
      @yield('content')
-    @include('layouts.partials.footer')
+    {{-- @include('layouts.partials.footer') --}}
 </body>
 </html>
