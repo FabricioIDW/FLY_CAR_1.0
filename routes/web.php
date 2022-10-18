@@ -36,8 +36,8 @@ Route::controller(OfferController::class)->group(function () {
     Route::get('/crearOferta', 'create')->name('offers.create');
     Route::get('/editarOferta/{offer}', 'edit')->name('offers.edit');
     Route::post('/ofertas', 'store')->name('offers.store');
-    Route::put('/ofertas/{oferta}', 'update')->name('offers.update');
-    Route::delete('/ofertas/{oferta}', 'destroy')->name('offers.destroy');
+    Route::put('/ofertas/{offer}', 'update')->name('offers.update');
+    Route::delete('/ofertas/{offer}', 'destroy')->name('offers.destroy');
 });
 
 Route::middleware([
