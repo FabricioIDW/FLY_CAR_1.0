@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOffer;
+use App\Models\Accessory;
 use App\Models\Offer;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
@@ -26,7 +28,9 @@ class OfferController extends Controller
      */
     public function create()
     {
-        return view('offers.create');
+        $vehicles = Vehicle::where('enabled', 1)->where('offer_id', null)->where('removed', 0)->get();
+        $accessories = Accessory::where('enabled', 1)->where('offer_id', null)->where('removed', 0)->get();
+        return view('offers.create', compact('vehicles', 'accessories'));
     }
 
     /**
@@ -37,8 +41,32 @@ class OfferController extends Controller
      */
     public function store(StoreOffer $request)
     {
-        $offer = Offer::create($request->all());
-        return redirect()->route('offers.show', $offer);
+        /*
+        TO DO
+        - Manejar error cuando ya existe una oferta con el descuento, inicio y fin ingresados.
+        - Redirigir a la vista del administrador
+        */
+        $offer = Offer::create([
+            'discount' => $request->discount,
+            'startDate' => $request->startDate,
+            'endDate' => $request->endDate,
+        ]);
+        if ($request->vehicles) {
+            foreach ($request->vehicles as $vehicle_id) {
+                $vehicle = Vehicle::find($vehicle_id);
+                $vehicle->offer_id = $offer->id;
+                $vehicle->save();
+            }
+        }
+        if ($request->accessories) {
+            foreach ($request->accessories as $accessory_id) {
+                $accessory = Accessory::find($accessory_id);
+                $accessory->offer_id = $offer->id;
+                $accessory->save();
+            }
+        }
+        return $offer;
+        // return redirect()->route('offers.show', $offer);
     }
 
     /**
