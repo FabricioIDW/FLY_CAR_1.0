@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -39,7 +40,14 @@ Route::controller(OfferController::class)->group(function () {
     Route::put('/ofertas/{offer}', 'update')->name('offers.update');
     Route::delete('/ofertas/{offer}', 'destroy')->name('offers.destroy');
 });
+// Payment
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('/pago/{amount}', 'index')->name('payments.index');
+    Route::post('/pago', 'store')->name('payments.store');
+});
 
+
+// Middlewares
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
