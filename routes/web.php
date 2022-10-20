@@ -3,6 +3,8 @@
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\ReserveController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,8 +44,16 @@ Route::controller(OfferController::class)->group(function () {
 });
 // Payment
 Route::controller(PaymentController::class)->group(function () {
-    Route::get('/pago/{amount}', 'index')->name('payments.index');
+    Route::get('/pago/{action}/{amount}', 'index')->name('payments.index');
     Route::post('/pago', 'store')->name('payments.store');
+});
+// Quotations
+Route::controller(QuotationController::class)->group(function () {
+    Route::get('/cotizacion/{quotation}', 'show')->name('quotations.show');
+});
+// Reserve
+Route::controller(ReserveController::class)->group(function () {
+    Route::get('/reserva', 'create')->name('reserves.create');
 });
 
 

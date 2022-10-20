@@ -44,6 +44,15 @@
                 margin-bottom: 0.5rem !important;
             }
         }
+
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+
+        body.modal-active {
+            overflow-x: hidden;
+            overflow-y: visible !important;
+        }
     </style>
 </head>
 
@@ -170,6 +179,7 @@
             </footer>
         </div>
     </div>
+  
     <script>
         document.addEventListener("alpine:init", () => {
             Alpine.data("creditCard", () => ({
@@ -217,6 +227,7 @@
             }));
         });
     </script>
+    
 </body>
 
 </html>

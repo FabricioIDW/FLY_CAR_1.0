@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExpirationDate;
+use App\Models\Quotation;
+use App\Models\Reserve;
 use Illuminate\Http\Request;
 
 class ReserveController extends Controller
@@ -11,10 +14,14 @@ class ReserveController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    // public function index(Quotation $quotation)
+    // {
+    //     $reserve = new Reserve();
+    //     $reserve->amount = $reserve->calculateAmount($quotation->finalAmount);
+    //     session(['reserve' => $reserve]);
+    //     session(['quotation' => $quotation]);
+    //     return view('quotations.index', compact('quotation', 'reserve'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -23,7 +30,14 @@ class ReserveController extends Controller
      */
     public function create()
     {
-        //
+        $reserve = session('reserve');
+        $reserve->quotation_id = session('quotation')->id;
+        $reserve->payment_id = session('payment')->id;
+        $reserve->dateTimeExpiration = ExpirationDate::getExpiration($reserve->dateTimeGenerated, 7);
+        session('quotation')->updateTimes($reserve->dateTimeGenerated);
+        session()->forget(['payment', 'quotation']);
+        $reserve->save();
+        return $reserve;
     }
 
     /**

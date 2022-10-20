@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quotation;
+use App\Models\Reserve;
 use Illuminate\Http\Request;
 
 class QuotationController extends Controller
@@ -43,9 +45,13 @@ class QuotationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Quotation $quotation)
     {
-        //
+        $reserve = new Reserve();
+        $reserve->amount = $reserve->calculateAmount($quotation->finalAmount);
+        session(['reserve' => $reserve]);
+        session(['quotation' => $quotation]);
+        return view('quotations.index', compact('quotation', 'reserve'));
     }
 
     /**
