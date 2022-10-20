@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class QuotationController extends Controller
@@ -81,4 +82,24 @@ class QuotationController extends Controller
     {
         //
     }
+    public function simularCotizacion(Vehicle $vehiculo){
+        if (session()->exists('users')) {
+            $vehiculos[] = $vehiculo;
+        session()->push('vehiculos', $vehiculos);
+        }else{
+         session(['vehiculos' => $vehiculo]);
+        }
+         return view('quotations.simularCotizacion', compact('vehiculo'));
+ 
+         
+     }
+
+     public function cotizar(Request $request){
+         return $request;
+         // return view('quotations.cotizacion');
+     }
+     public function agregarOtroVehiculo(Request $request){
+
+        return route('productos.catalogo');
+     }
 }

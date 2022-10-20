@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,4 +49,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+///cotizacion
+
+Route::controller(QuotationController::class)->group( function(){
+    //Route::get('curso/create', 'create')->name('curso.create');
+    //Route::get('curso', 'index')->name('curso.index');
+    Route::get('quotation/{vehiculo}/', 'simularCotizacion')->name('quotations.simularCotizacion');
+    Route::post('quotation/', 'cotizar')->name('quotations.cotizar');
+   // Route::get('quotation/agregar', 'agregarOtroVehiculo')->name('quotations.agregarOtroVehiculo');
 });
