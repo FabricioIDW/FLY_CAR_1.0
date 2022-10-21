@@ -40,7 +40,7 @@ Route::controller(OfferController::class)->group(function () {
     Route::get('/editarOferta/{offer}', 'edit')->name('offers.edit');
     Route::post('/ofertas', 'store')->name('offers.store');
     Route::put('/ofertas/{offer}', 'update')->name('offers.update');
-    Route::delete('/ofertas/{offer}', 'destroy')->name('offers.destroy');
+    Route::get('/ofertas/{offer}', 'destroy')->name('offers.destroy');
 });
 // Payment
 Route::controller(PaymentController::class)->group(function () {

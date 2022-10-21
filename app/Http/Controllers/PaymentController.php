@@ -15,6 +15,7 @@ class PaymentController extends Controller
      */
     public function index($action, $amount)
     {
+        // Action = De donde se llama el pago (reserve o sale).
         session(['action' => $action]);
         return view('payments.index', compact('amount'));
     }
@@ -26,20 +27,17 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        // TO DO 
         // ¿Validar si la cotizacion posee una reserva se debe redireccionar?
         if ($request->accepted) {
             $payment = Payment::create([
                 'amount' => $request->amount,
             ]);
             session(['payment' => $payment]);
-        } else {
-            session(['payment' => null]);
+            if (session('action') == 'reserve') {
+                return redirect()->route('reserves.create');
+            }
+            return redirect()->route('sales.create');
         }
-        $pago = session('payment');
-        if (session('action') == 'reserve') {
-            return redirect()->route('reserves.create');
-        }
-        // return redirect()->route('productos.catalogo');
-        // return $pago;
     }
 }

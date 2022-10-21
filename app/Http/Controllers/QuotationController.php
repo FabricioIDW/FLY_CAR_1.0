@@ -47,6 +47,9 @@ class QuotationController extends Controller
      */
     public function show(Quotation $quotation)
     {
+        // ******Solo de prueba******
+        // TO DO
+        // Cuando se selecciona una cotización se tiene que guardar en el arreglo session para obtenerlo desde el controlador de reserva o venta 
         $reserve = new Reserve();
         $reserve->amount = $reserve->calculateAmount($quotation->finalAmount);
         session(['reserve' => $reserve]);

@@ -2,7 +2,8 @@
 @section('title', 'Cotizacion')
 @section('content')
     @if ($quotation->reserve)
-    <x-modal openBtn="Reservar" title="Reserva" leftBtn="Ok" rightBtn="Cancelar" ref="quotations.show" value="{{$quotation->id}}">
+        <x-modal openBtn="Reservar" title="Reserva" leftBtn="Ok" rightBtn="Cancelar" ref="quotations.show"
+            value="{{ $quotation->id }}">
             <p>Ya realizó la reserva de esta cotización.</p>
             <p>La reserva es válida hasta {{ $quotation->reserve->dateTimeExpiration }}</p>
         </x-modal>
