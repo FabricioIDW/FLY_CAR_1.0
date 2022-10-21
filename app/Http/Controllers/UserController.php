@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\User;
+use App\Models\UserType;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -32,9 +35,23 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store_customer(Request $request)
     {
-        //
+        $user = User::create([
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'usertype_id' => UserType::where('description', 'Cliente')->first()->id,
+        ]);
+        $customer = Customer::create([
+            'dni' => $request->dni,
+            'name' => $request->name, 
+            'lastNmae' => $request->lasName, 
+            'birthDate' => $request->birthDate, 
+            'address' => $request->address, 
+            'email' => $request->email, 
+            'user_id' => $request->$user->id,
+        ]);
+        return $request;
     }
 
     /**

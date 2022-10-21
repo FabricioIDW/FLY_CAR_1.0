@@ -58,7 +58,10 @@ Route::controller(QuotationController::class)->group(function () {
 Route::controller(ReserveController::class)->group(function () {
     Route::get('/reserva', 'create')->name('reserves.create');
 });
-
+// User
+Route::controller(UserController::class)->group(function () {
+    Route::post('/register', 'store_customer')->name('usersCustomer.store');
+});
 
 // Middlewares
 Route::middleware([
