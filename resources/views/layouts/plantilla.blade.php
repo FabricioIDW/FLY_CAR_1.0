@@ -14,7 +14,7 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-orange-300">
     {{-- @include('layouts.partials.header') --}}
      @yield('content')
     {{-- @include('layouts.partials.footer') --}}

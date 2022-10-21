@@ -138,10 +138,32 @@
 
 @extends('layouts.plantilla')
 @section('content')
-<div class="bg-orange-300">
-    <div class="titulos">FLY<br>CAR</div>
+<div>
+    {{-- NAVBAR MENU DESPLAZABLE/TITULO/ICONO INICIO SESION --}}
+    <div class="m-auto justify-between flex items-center text-gray-700">
+        <button class="block py-3 px-4 mx-2 rounded focus:outline-none hover:bg-gray-200 group">
+            <div class="w-5 h-1 bg-gray-600 mb-1"></div>
+            <div class="w-5 h-1 bg-gray-600 mb-1"></div>
+            <div class="w-5 h-1 bg-gray-600"></div>
+            <div class="absolute top-0 -left-full h-screen w-6/10 bg-white border opacity-0
+            group-focus:left-0 group-focus:opacity-100 transition-all duration-300">
+                <ul class="flex flex-col items-center w-full text-base cursor-pointer pt-10">
+                    <li class="hover:bg-gray-200 py-4 px-6 w-full">Mi cotizacion</li>
+                    <li class="hover:bg-gray-200 py-4 px-6 w-full">Sobre nosotros</li>
+                    <li class="hover:bg-gray-200 py-4 px-6 w-full">Ajustes de cuenta</li>
+                    <li class="hover:bg-gray-200 py-4 px-6 w-full">Contactenos</li>
+                </ul>
+            </div>
+        </button>
+        <div class="titulos">FLY<br>CAR</div>
+        <div>IMAGEN SESION</div>
+    </div>    
+        {{-- --}}
+
+        
+    {{-- <div class="titulos">FLY<br>CAR</div> --}}
     {{--<a href="{{route('productos.index')}}">Index Productos</a> --}}
-    
+        
     <div class="scroll-container">
         <div class="columns-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-auto space-x-1 space-y-1">
             @foreach ($vehiculos as $veh)

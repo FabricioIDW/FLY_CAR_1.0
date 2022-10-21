@@ -81,4 +81,7 @@ class UserController extends Controller
     {
         //
     }
+    public function indexAdmin(){
+        return view('indexAdmin');
+    }
 }

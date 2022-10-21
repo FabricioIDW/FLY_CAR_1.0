@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,13 +20,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // })->name('home');
-Route::controller(ProductController::class)->group(function () {
-    Route::get('catalogo', 'catalogo')->name('productos.catalogo');
-});
 
-Route::get('/', function () {
-    return redirect()->route('productos.catalogo');
-})->name('home');
 
 // Route::resource('vehicles', VehicleController::class)->parameters(['vehicles' => 'vehicles'])->names('vehicles');
 
