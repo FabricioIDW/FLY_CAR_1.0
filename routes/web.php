@@ -5,6 +5,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\ReserveController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,19 +19,21 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::controller(ProductController::class)->group(function(){
+    Route::get('catalogo', 'catalogo')->name('productos.catalogo');   
+    Route::get('searchProducts', 'index')->name('productos.buscar');
+    Route::get('products/create', 'create')->name('productos.create');
+    
+   });
 
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('home');
-Route::controller(ProductController::class)->group(function () {
-    Route::get('catalogo', 'catalogo')->name('productos.catalogo');
-});
+   Route::controller(UserController::class)->group(function(){
+    Route::get('indexAdmin', 'indexAdmin')->name('admin.index');
 
-Route::get('/', function () {
-    return redirect()->route('productos.catalogo');
-})->name('home');
-
-// Route::resource('vehicles', VehicleController::class)->parameters(['vehicles' => 'vehicles'])->names('vehicles');
+   });
+   
+   Route::get('/', function () {
+       return redirect()->route('productos.catalogo');
+   })->name('home');
 
 Route::resource('vehicles', VehicleController::class);
 // Offers

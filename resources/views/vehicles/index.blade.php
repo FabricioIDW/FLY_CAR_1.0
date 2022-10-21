@@ -8,5 +8,4 @@
             <li><a href="{{ route('vehicles.show', $vehicle) }}">Ver</a> <strong>Marca:</strong> {{ $vehicle->vehicleModel->brand->name }} <strong>Modelo:</strong> {{ $vehicle->vehicleModel->name }} <strong>Chasis:</strong> {{ $vehicle->chassis }}</li>
         @endforeach
     </ul>
-    {{ $vehicles->links() }}
 @endsection
