@@ -16,6 +16,13 @@ module.exports = {
             },
         },
     },
+    variants:{
+        extend:{
+            display: ['group-focus'],
+            opacity: ['group-focus'],
+            inset: ['group-focus'],
+        },
+    },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

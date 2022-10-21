@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,14 @@ use Illuminate\Support\Facades\Route;
 // })->name('home');
 Route::controller(ProductController::class)->group(function(){
     Route::get('catalogo', 'catalogo')->name('productos.catalogo');   
+    Route::get('searchProducts', 'index')->name('productos.buscar');
+    Route::get('products/create', 'create')->name('productos.create');
+    
+   });
+
+   Route::controller(UserController::class)->group(function(){
+    Route::get('indexAdmin', 'indexAdmin')->name('admin.index');
+
    });
    
    Route::get('/', function () {
