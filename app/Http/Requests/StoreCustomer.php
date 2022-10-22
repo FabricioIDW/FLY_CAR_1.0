@@ -24,9 +24,40 @@ class StoreCustomer extends FormRequest
     public function rules()
     {
         return [
-            // 'discount' => 'required|min:0.01|max:99.99|unique:offers,discount,NULL,id,startDate,' . $this->input('startDate') . ',endDate,' . $this->input('endDate'),
-            'name' => 'required|',
-            'endDate' => 'required',
+            'dni' => ['required', 'string', 'min:8', 'max:8', 'unique:customers', 'regex:/0-9/i'],
+            'name' => 'required|string',
+            'lastName' => 'required|string',
+            'birthDate' => 'required|date',
+            'address' => 'required|string',
+            'email' => ['required', 'unique:customers', 'regex:/^.+@.+$/i'],
+            'password' => 'required',
+            'password_confirmation' => 'required',
+        ];
+    }
+    public function attribute()
+    {
+        return [
+            'name' => 'nombre',
+            'lastName' => 'apellido',
+            'birthDate' => 'fecha de nacimiento',
+            'address' => 'dirección',
+            'password' => 'contraseña',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'dni.required' => 'El DNI es obligatorio',
+            'dni.min' => 'El DNI debe ser de 8 dígitos (solo números)',
+            'dni.max' => 'El DNI debe ser de 8 dígitos (solo números)',
+            'dni.unique' => 'El DNI ya se encuentra registrado',
+            'name.required' => 'El nombre es obligatorio',
+            'lastName.required' => 'El apellido es obligatorio',
+            'birthDate.required' => 'La fecha de nacimiento es obligatoria',
+            'address.required' => 'La dirección es obligatoria',
+            'email.required' => 'El email ya se encuentra registrado',
+            'password.required' => 'La contraseña es obligatoria',
+            'password_confirmation.required' => 'Confirme la contraseña',
         ];
     }
 }

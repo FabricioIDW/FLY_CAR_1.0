@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCustomer;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\UserType;
@@ -35,7 +36,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_customer(Request $request)
+    public function store_customer(StoreCustomer $request)
     {
         $user = User::create([
             'email' => $request->email,
@@ -44,11 +45,11 @@ class UserController extends Controller
         ]);
         $customer = Customer::create([
             'dni' => $request->dni,
-            'name' => $request->name, 
-            'lastNmae' => $request->lasName, 
-            'birthDate' => $request->birthDate, 
-            'address' => $request->address, 
-            'email' => $request->email, 
+            'name' => $request->name,
+            'lastNmae' => $request->lasName,
+            'birthDate' => $request->birthDate,
+            'address' => $request->address,
+            'email' => $request->email,
             'user_id' => $request->$user->id,
         ]);
         return $request;
@@ -98,7 +99,8 @@ class UserController extends Controller
     {
         //
     }
-    public function indexAdmin(){
+    public function indexAdmin()
+    {
         return view('indexAdmin');
     }
 }
