@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCustomer;
+use App\Http\Requests\StoreExistingCustomer;
+use App\Http\Requests\StoreNewCustomer;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\UserType;
@@ -17,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('auth.register');
     }
 
     /**
@@ -25,9 +26,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create_existing_customer()
     {
-        //
+        return view('auth.create-existing-customer');
+    }
+
+    public function create_new_customer()
+    {
+        return view('auth.create-new-customer');
     }
 
     /**
@@ -36,7 +42,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_customer(StoreCustomer $request)
+    public function store_new_customer(StoreNewCustomer $request)
     {
         $user = User::create([
             'email' => $request->email,
@@ -46,15 +52,27 @@ class UserController extends Controller
         $customer = Customer::create([
             'dni' => $request->dni,
             'name' => $request->name,
-            'lastNmae' => $request->lasName,
+            'lastName' => $request->lastName,
             'birthDate' => $request->birthDate,
             'address' => $request->address,
             'email' => $request->email,
-            'user_id' => $request->$user->id,
+            'user_id' => $user->id,
         ]);
-        return $request;
+        $data = [
+            'user' => $user,
+            'customer' => $customer,
+        ];
+        return $data;
     }
-
+    public function store_existing_customer(StoreExistingCustomer $request)
+    {
+          $user = User::create([
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'usertype_id' => UserType::where('description', 'Cliente')->first()->id,
+          ]);
+        return $user;
+    }
     /**
      * Display the specified resource.
      *

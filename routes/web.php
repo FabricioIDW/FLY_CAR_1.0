@@ -60,7 +60,11 @@ Route::controller(ReserveController::class)->group(function () {
 });
 // User
 Route::controller(UserController::class)->group(function () {
-    Route::post('/register', 'store_customer')->name('usersCustomer.store');
+    Route::get('/crearCuenta', 'index')->name('usersCustomer.index');
+    Route::get('/crearCuenta/nuevoCliente', 'create_new_customer')->name('usersCustomer.createNew');
+    Route::get('/crearCuenta/clienteExistente', 'create_existing_customer')->name('usersCustomer.createExisting');
+    Route::post('/crearCuenta/nuevoCliente', 'store_new_customer')->name('usersCustomer.storeNew');
+    Route::post('/crearCuenta/clienteExistente', 'store_existing_customer')->name('usersCustomer.storeExisting');
 });
 
 // Middlewares
