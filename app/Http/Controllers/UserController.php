@@ -66,7 +66,15 @@ class UserController extends Controller
     public function store_existing_customer(StoreExistingCustomer $request)
     {
         $user = $this->createUser($request->email, $request->password, 'Cliente');
+        $customer = Customer::where('dni', $request->dni)->first();
+        $customer->user_id = $user->id;
+        $customer->save();
         return $user;
+    }
+    // update customer
+    public function update_customer(Request $request)
+    {
+        return  $request;
     }
     // SELLER
     public function create_seller()
@@ -89,7 +97,7 @@ class UserController extends Controller
         return User::create([
             'email' => $email,
             'password' => bcrypt($password),
-            'usertype_id' => UserType::where('description', $userType)->first()->id,
+            'user_type_id' => UserType::where('description', $userType)->first()->id,
         ]);
     }
     /**

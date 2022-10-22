@@ -18,12 +18,12 @@ return new class extends Migration
             $table->text('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('usertype_id')->nullable();
+            $table->unsignedBigInteger('user_type_id');
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('usertype_id')->references('id')->on('user_types')->nullOnDelete();
+            $table->foreign('user_type_id')->references('id')->on('user_types');
         });
     }
 
