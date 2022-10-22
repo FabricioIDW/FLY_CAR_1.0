@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExistingCustomer;
 use App\Http\Requests\StoreNewCustomer;
+use App\Http\Requests\StoreSeller;
 use App\Models\Customer;
+use App\Models\Seller;
 use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Http\Request;
@@ -26,6 +28,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // CUSTOMER
     public function create_existing_customer()
     {
         return view('auth.create-existing-customer');
@@ -44,11 +47,7 @@ class UserController extends Controller
      */
     public function store_new_customer(StoreNewCustomer $request)
     {
-        $user = User::create([
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'usertype_id' => UserType::where('description', 'Cliente')->first()->id,
-        ]);
+        $user = $this->createUser($request->email, $request->password, 'Cliente');
         $customer = Customer::create([
             'dni' => $request->dni,
             'name' => $request->name,
@@ -66,12 +65,32 @@ class UserController extends Controller
     }
     public function store_existing_customer(StoreExistingCustomer $request)
     {
-          $user = User::create([
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'usertype_id' => UserType::where('description', 'Cliente')->first()->id,
-          ]);
+        $user = $this->createUser($request->email, $request->password, 'Cliente');
         return $user;
+    }
+    // SELLER
+    public function create_seller()
+    {
+        return view('auth.create-seller-account');
+    }
+    public function store_seller(StoreSeller $request)
+    {
+        $user = $this->createUser($request->email, $request->password, 'Vendedor');
+        $seller = Seller::create([
+            'dni' => $request->dni,
+            'name' => $request->name,
+            'lastName' => $request->lastName,
+            'user_id' => $user->id,
+        ]);
+        return ['user' => $user, 'seller' => $seller];
+    }
+    private function createUser($email, $password, $userType)
+    {
+        return User::create([
+            'email' => $email,
+            'password' => bcrypt($password),
+            'usertype_id' => UserType::where('description', $userType)->first()->id,
+        ]);
     }
     /**
      * Display the specified resource.

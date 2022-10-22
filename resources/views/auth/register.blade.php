@@ -5,12 +5,14 @@
         </x-slot>
 
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-center mt-4">
             <a href="{{ route('usersCustomer.createExisting') }}">
                 <x-jet-button class="ml-4">
                     {{ __('¿Fue cliente de manera presencial?') }}
                 </x-jet-button>
             </a>
+        </div>
+        <div class="flex items-center justify-center mt-4">
             <a href="{{ route('usersCustomer.createNew') }}">
                 <x-jet-button class="ml-4">
                     {{ __('Crear nueva cuenta') }}
