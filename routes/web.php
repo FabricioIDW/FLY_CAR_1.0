@@ -57,6 +57,7 @@ Route::controller(QuotationController::class)->group( function(){
     //Route::get('curso/create', 'create')->name('curso.create');
     //Route::get('curso', 'index')->name('curso.index');
     Route::get('quotation/{vehiculo}/', 'simularCotizacion')->name('quotations.simularCotizacion');
-    Route::post('quotation/', 'cotizar')->name('quotations.cotizar');
-   // Route::get('quotation/agregar', 'agregarOtroVehiculo')->name('quotations.agregarOtroVehiculo');
+    Route::post('quotation/cotizar', 'cotizar')->name('quotations.cotizar');
+    Route::get('quotation/addVehicle', 'agregarOtroVehiculo')->name('quotations.agregarOtroVehiculo');
+    Route::get('quotation/miCotizacion', 'generarCotizacion')->name('quotations.generarCotizacion');
 });

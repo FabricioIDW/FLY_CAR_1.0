@@ -29,7 +29,7 @@
             Actualmente posee una oferta del  {{$vehiculo->offer->discount}} %
           </div>
         </div>
-          <form class="col-span-5 row-span-3  flex-auto p-6" action="{{route('quotations.cotizar')}}" method="POST">
+          <form class="col-span-5 row-span-3  flex-auto p-6" action="{{route('quotations.cotizar')}}" method="POST"> 
             @csrf
             <div class="col-span-3 row-span-3 pt-8 flex-auto p-6 rounded-b-lg hover:text-black">
             <div class="flex flex-wrap">
@@ -54,18 +54,27 @@
           </div>
           <div class="col-span-5 row-span-3 flex justify-end mb-5 text-sm font-medium rounded-bl-lg ">
             <div class="flex justify-end ">
-              <button class="mr-8 h-10 px-6 font-semibold rounded-full bg-blue-600 text-white" type="button" onclick="parent.location='#'">
-                Agregar otro vehiculo
-              </button>
-              <button class="p-auto mr-4 h-10 px-6 font-semibold rounded-full bg-blue-600 text-white" type="submit">
-                simular cotizacion
-              </button>
+              <?php
+              
+              if (session()->exists('vehiculo2')) {
+              ?>
+              <input class="mr-8 h-10 px-6 font-semibold rounded-full bg-red-600 text-white" type="submit" name="btnAgregar" value="Agregar otro Vehiculo" disabled>
+              <?php  
+              } else {
+                ?>
+              <input class="mr-8 h-10 px-6 font-semibold rounded-full bg-blue-600 text-white" type="submit" name="btnAgregar" value="Agregar otro Vehiculo" >
+              <?php   
+              }
+              ?>
+              <input class="p-auto mr-4 h-10 px-6 font-semibold rounded-full bg-blue-600 text-white" type="submit" name="btnSimular" value="Simular Cotizacion">
+            </form>
             </div>
           </div>
   </div>
   </div>
+  
   <script>
-
+  
   </script>
 @endsection
 
