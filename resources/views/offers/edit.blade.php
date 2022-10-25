@@ -35,6 +35,7 @@
                                         inicio</label>
                                     <input type="date" name="startDate" id="idStartDate"
                                         value="{{ old('startDate', $offer->startDate) }}"
+                                        min="{{ now()->toDateString('Y-m-d') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                     @error('startDate')
                                         <p class="mt-2 text-sm text-gray-500">*{{ $message }}</p>
@@ -45,6 +46,7 @@
                                         fin</label>
                                     <input type="date" name="endDate" id="idEndDate"
                                         value="{{ old('endDate', $offer->endDate) }}"
+                                        min="{{ now()->toDateString('Y-m-d') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                     @error('endDate')
                                         <p class="mt-2 text-sm text-gray-500">*{{ $message }}</p>

@@ -1,5 +1,5 @@
-  <button
-      class="modal-open bg-transparent border border-gray-500 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-2 px-4 rounded-full">{{ $openBtn }}</button>
+  {{-- <button
+      class="modal-open bg-transparent border border-gray-500 hover:border-indigo-500 text-gray-500 hover:text-indigo-500 font-bold py-2 px-4 rounded-full">{{ $openBtn }}</button> --}}
 
   <!--Modal-->
   <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
@@ -37,7 +37,7 @@
               {{ $slot }}
               <!--Footer-->
               <div class="flex justify-end pt-2">
-                  <a href="{{ route($ref, $value) }}">
+                  <a id="idRefDestroy" href="{{ route($ref, $value) }}">
                       <button
                           class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">
                           {{ $leftBtn }}
@@ -50,7 +50,7 @@
           </div>
       </div>
   </div>
-  <script>
+  {{-- <script>
       var openmodal = document.querySelectorAll('.modal-open')
       for (var i = 0; i < openmodal.length; i++) {
           openmodal[i].addEventListener('click', function(event) {
@@ -88,4 +88,4 @@
           modal.classList.toggle('pointer-events-none')
           body.classList.toggle('modal-active')
       }
-  </script>
+  </script> --}}

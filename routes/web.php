@@ -5,6 +5,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\ReserveController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,10 @@ Route::controller(QuotationController::class)->group(function () {
 // Reserve
 Route::controller(ReserveController::class)->group(function () {
     Route::get('/reserva', 'create')->name('reserves.create');
+});
+// Sale
+Route::controller(SaleController::class)->group(function () {
+    Route::get('/venta/{concretized}', 'create')->name('sales.create');
 });
 // User
 Route::controller(UserController::class)->group(function () {

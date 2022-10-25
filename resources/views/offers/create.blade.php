@@ -29,7 +29,7 @@
                                 <div class="col-span-6 sm:col-span-4">
                                     <label for="idStartDate" class="block text-sm font-medium text-gray-700">Fecha de
                                         inicio</label>
-                                    <input type="date" name="startDate" id="idStartDate" value="{{ old('startDate') }}"
+                                    <input type="date" name="startDate" id="idStartDate" value="{{ old('startDate') }}" min="{{ now()->toDateString('Y-m-d') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 </div>
                                 @error('startDate')
@@ -38,7 +38,7 @@
                                 <div class="col-span-6 sm:col-span-4">
                                     <label for="idEndDate" class="block text-sm font-medium text-gray-700">Fecha de
                                         fin</label>
-                                    <input type="date" name="endDate" id="idEndDate" value="{{ old('endDate') }}"
+                                    <input type="date" name="endDate" id="idEndDate" value="{{ old('endDate') }}" min="{{ now()->toDateString('Y-m-d') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 </div>
                                 @error('endDate')
