@@ -22,8 +22,8 @@
 </div>
 <div class="mx-auto grid grid-cols-1">
     <div class="text-2xl font-semibold text-center">Ofertas</div><br>
-    <button class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Crear Oferta</button><br>
-    <button class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Eliminar Oferta</button>
+    <a href="{{route('offers.create')}}"><button class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Crear Oferta</button></a><br>
+    <a href="{{route('offers.index')}}"><button class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Modificar Ofertas</button></a>
 </div>
 <div class="mx-auto grid grid-cols-1">
     <div class="text-2xl font-semibold text-center">Estadisticas</div><br>

@@ -13,8 +13,9 @@
             font-weight: bold;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body class="bg-orange-300">
+<body class="bg-orange-300 h-screen">
     {{-- @include('layouts.partials.header') --}}
      @yield('content')
     {{-- @include('layouts.partials.footer') --}}
