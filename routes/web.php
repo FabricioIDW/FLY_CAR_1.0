@@ -53,7 +53,13 @@ Route::controller(PaymentController::class)->group(function () {
 // Quotations
 Route::controller(QuotationController::class)->group(function () {
     Route::get('/cotizacion/{quotation}', 'show')->name('quotations.show');
+    Route::get('quotation/{vehiculo}/', 'simularCotizacion')->name('quotations.simularCotizacion');
+    Route::post('quotation/', 'agregarOtroVehiculo')->name('quotations.cotizar');
+    Route::get('miCotizacion/', 'generarCotizacion')->name('quotations.miCotizacion');
+    Route::post('searchQuotation/', 'buscarCotizacion')->name('quotations.search');
 });
+
+
 // Reserve
 Route::controller(ReserveController::class)->group(function () {
     Route::get('/reserva', 'create')->name('reserves.create');
