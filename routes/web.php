@@ -21,8 +21,20 @@ use Illuminate\Support\Facades\Route;
 */
 Route::controller(ProductController::class)->group(function(){
     Route::get('catalogo', 'catalogo')->name('productos.catalogo');   
-    Route::get('searchProducts', 'index')->name('productos.buscar');
+    Route::get('products/search', 'index')->name('productos.buscar');
+
+    Route::get('busquedaV', 'searchV')->name('productos.buscarVehiculos'); 
+    Route::get('busquedaA', 'searchA')->name('productos.buscarAccesorios');
+    
+    Route::get('modelsByBrand', 'modelsBrand')->name('productos.modelosPorMarca');
+
+
     Route::get('products/create', 'create')->name('productos.create');
+
+    Route::post('products', 'store')->name('productos.store');
+    
+    Route::get('products/search/vehicle/{id}', 'destroy_vehicle')->name('productos_vehiculos.destroy');
+    Route::get('products/search/accesory/{id}', 'destroy_accesory')->name('productos_accesorio.destroy');
     
    });
 
