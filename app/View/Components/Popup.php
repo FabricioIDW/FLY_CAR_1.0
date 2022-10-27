@@ -4,9 +4,9 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Modal extends Component
+class Popup extends Component
 {
-    // public $openBtn;
+    public $openBtn;
     public $title;
     public $leftBtn;
     public $rightBtn;
@@ -17,12 +17,12 @@ class Modal extends Component
      *
      * @return void
      */
-    public function __construct( $title, $leftBtn, $rightBtn, $ref, $value)
+    public function __construct($openBtn, $title, $leftBtn, $rightBtn, $ref, $value)
     {
         $this->title = $title;
         $this->leftBtn = $leftBtn;
         $this->rightBtn = $rightBtn;
-        // $this->openBtn = $openBtn;
+        $this->openBtn = $openBtn;
         $this->ref = $ref;
         $this->value = $value;
     }
@@ -34,6 +34,6 @@ class Modal extends Component
      */
     public function render()
     {
-        return view('components.modal');
+        return view('components.popup');
     }
 }

@@ -47,26 +47,7 @@
                                             </div>
                                         </a>
                                         <div class="overflow-x-auto">
-                                            {{-- Modal --}}
-                                            <x-modal openBtn="Eliminar" title="Eliminar oferta" leftBtn="Eliminar"
-                                                rightBtn="Cancelar" ref="offers.destroy" value="{{ $offer->id }}">
-                                                <p>¿Está seguro de eliminar esta oferta?</p>
-                                            </x-modal>
-                                            {{-- Ícono eliminar --}}
-                                            {{-- <form action="{{ route('offers.destroy', $offer) }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit">
-                                                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                        </svg>
-                                                    </div>
-                                                </button>
-                                            </form> --}}
+                                            <x-button openBtn="Eliminar" value="{{ $offer->id }}"></x-button>
                                         </div>
                                 </td>
                             </tr>
@@ -75,7 +56,53 @@
                 </table>
                 {{ $offers->links() }}
             </div>
+            <x-modal  title="Eliminar oferta" leftBtn="Eliminar" rightBtn="Cancelar" ref="offers.destroy"
+                value="" id="idModal">
+                <p>¿Está seguro de eliminar esta oferta?</p>
+            </x-modal>
         </div>
     </div>
     </div>
+    <script>
+        var openmodal = document.querySelectorAll('.modal-open')
+        openmodal.forEach(element => {
+            const modal = document.getElementById('idRefDestroy');
+            element.addEventListener('click', function(event) {
+                event.preventDefault();
+                toggleModal();
+                console.log(element.value);
+                modal.href = `ofertas/${element.value}`;
+            });
+        });
+
+        const overlay = document.querySelector('.modal-overlay')
+        overlay.addEventListener('click', toggleModal)
+
+        var closemodal = document.querySelectorAll('.modal-close')
+        for (var i = 0; i < closemodal.length; i++) {
+            closemodal[i].addEventListener('click', toggleModal)
+        }
+
+        document.onkeydown = function(evt) {
+            evt = evt || window.event
+            var isEscape = false
+            if ("key" in evt) {
+                isEscape = (evt.key === "Escape" || evt.key === "Esc")
+            } else {
+                isEscape = (evt.keyCode === 27)
+            }
+            if (isEscape && document.body.classList.contains('modal-active')) {
+                toggleModal()
+            }
+        };
+
+        function toggleModal() {
+            const body = document.querySelector('body')
+            const modal = document.querySelector('.modal')
+            modal.classList.toggle('opacity-0')
+            modal.classList.toggle('pointer-events-none')
+            body.classList.toggle('modal-active')
+        }
+    </script>
+
 @endsection

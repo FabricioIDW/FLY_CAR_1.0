@@ -167,7 +167,7 @@
     <div class="scroll-container">
         <div class="columns-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-auto space-x-1 space-y-1">
             @foreach ($vehiculos as $veh)
-            <a href="{{route('quotation.simularCotizacion', $veh->id)}}"> <img src="{{$veh->image}}"></a>
+            <a href="{{route('quotations.simularCotizacion', $veh->id)}}"> <img src="{{$veh->image}}"></a>
              @endforeach
         </div>
     </div>

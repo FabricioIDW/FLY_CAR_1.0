@@ -46,4 +46,13 @@ class Quotation extends Model
         $this->valid = $valor;
         $this->save();
     }
+    public function checkVehiclesState() 
+    {
+        foreach ($this->vehicles as $vehicle) {
+            if (!$vehicle->enabled) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
