@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class ModalQuotation extends Component
+class Popup extends Component
 {
     public $openBtn;
     public $title;
@@ -34,6 +34,6 @@ class ModalQuotation extends Component
      */
     public function render()
     {
-        return view('components.modal-quotation');
+        return view('components.popup');
     }
 }

@@ -71,12 +71,12 @@
     $customer = Customer::where('user_id',$usuario->id)->first();///busco usuario de roll cliente
     @endphp
         @if ($customer->hasValidQuotation()) --}}
-   <x-modal  openBtn="Generar Cotizacion" title="Usted tiene una cotizacion vigente" leftBtn="Continuar Operacion" rightBtn="Cancelar Operacion" ref="quotations.miCotizacion"
+   <x-popup  openBtn="Generar Cotizacion" title="Usted tiene una cotizacion vigente" leftBtn="Continuar Operacion" rightBtn="Cancelar Operacion" ref="quotations.miCotizacion"
     value="">
     <p>
         ¿Desea continuar con la operacion?
      </p> 
-    </x-modal>
+    </x-popup>
      {{-- @else   
      <x-modal  openBtn="Generar Cotizacion" title="Generar una Cotizacion" leftBtn="Cancelar" rightBtn="Continuar" ref="quotations.miCotizacion"
      value="">

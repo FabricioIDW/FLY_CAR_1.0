@@ -56,24 +56,24 @@
 <p class="text-red-600 pr-8">Esta cotización vence el día {{ $quotation->dateTimeExpiration}}hs.</p>
 <p class="text-xs">Fecha de creación de la cotización {{$quotation->dateTimeGenerated}} </p>
 </div>
-{{-- Modal para reserva --}}
+{{-- popup para reserva --}}
 <div class="capitalice col-span-6 pt-4 pb-4 flex justify-center">
     @if ($quotation->reserve)
-    <x-modal openBtn="Reservar" title="Reserva" leftBtn="Ok" rightBtn="Cancelar" ref="home"
+    <x-popup openBtn="Reservar" title="Reserva" leftBtn="Ok" rightBtn="Cancelar" ref="home"
         value="{{ $quotation->id }}">
         <p>Ya realizó la reserva de esta cotización.</p>
         <p>La reserva es válida hasta {{ $quotation->reserve->dateTimeExpiration }}</p>
-    </x-modal>
+    </x-popup>
 @else
     @php
         $values = ['action' => 'reserve', 'amount' => $reserve->amount];
     @endphp
-    <x-modal openBtn="Reservar" title="Reserva" leftBtn="Realizar pago" rightBtn="Cancelar" ref="payments.index"
+    <x-popup openBtn="Reservar" title="Reserva" leftBtn="Realizar pago" rightBtn="Cancelar" ref="payments.index"
         :value=$values>
         <p>Importe de la cotización: ${{ $quotation->finalAmount }}</p>
         <p>Importe de la seña a pagar: ${{ $reserve->amount }}</p>
         <p>(5% del importe de la cotización)</p>
-    </x-modal>
+    </x-popup>
 @endif
 {{--     
 <button class="text-xs  lg:text-sm h-10 px-6 font-semibold rounded-full bg-blue-600 text-white" onclick="parent.location = '{{route('quotations.show', '1')}}'">
