@@ -27,8 +27,6 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        // TO DO 
-        // ¿Validar si la cotizacion posee una reserva se debe redireccionar?
         if ($request->accepted) {
             $payment = Payment::create([
                 'amount' => $request->amount,
@@ -37,7 +35,9 @@ class PaymentController extends Controller
             if (session('action') == 'reserve') {
                 return redirect()->route('reserves.create');
             }
-            return redirect()->route('sales.create');
+            if (session('action') == 'sale') {
+                return redirect()->route('sales.create', ['concretized' => 1]);
+            }
         }
     }
 }

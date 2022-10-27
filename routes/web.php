@@ -5,6 +5,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\ReserveController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -65,12 +66,34 @@ Route::controller(PaymentController::class)->group(function () {
 // Quotations
 Route::controller(QuotationController::class)->group(function () {
     Route::get('/cotizacion/{quotation}', 'show')->name('quotations.show');
+    Route::get('quotation/{vehiculo}/', 'simularCotizacion')->name('quotations.simularCotizacion');
+    Route::post('quotation/', 'agregarOtroVehiculo')->name('quotations.cotizar');
+    Route::get('miCotizacion/', 'generarCotizacion')->name('quotations.miCotizacion');
+    Route::post('searchQuotation/', 'buscarCotizacion')->name('quotations.search');
 });
+
+
 // Reserve
 Route::controller(ReserveController::class)->group(function () {
     Route::get('/reserva', 'create')->name('reserves.create');
 });
-
+// Sale
+Route::controller(SaleController::class)->group(function () {
+    Route::get('/venta/{concretized}', 'create')->name('sales.create');
+});
+// User
+Route::controller(UserController::class)->group(function () {
+    // Customer
+    Route::get('/crearCuenta', 'index')->name('usersCustomer.index');
+    Route::get('/crearCuenta/nuevoCliente', 'create_new_customer')->name('usersCustomer.createNew');
+    Route::get('/crearCuenta/clienteExistente', 'create_existing_customer')->name('usersCustomer.createExisting');
+    Route::post('/crearCuenta/nuevoCliente', 'store_new_customer')->name('usersCustomer.storeNew');
+    Route::post('/crearCuenta/clienteExistente', 'store_existing_customer')->name('usersCustomer.storeExisting');
+    Route::put('/user/profile', 'update_customer')->name('usersCustomer.update');
+    // Seller
+    Route::get('/crearCuenta/vendedor', 'create_seller')->name('usersSeller.create');
+    Route::post('/crearCuenta/vendedor', 'store_seller')->name('usersSeller.store');
+});
 
 // Middlewares
 Route::middleware([
