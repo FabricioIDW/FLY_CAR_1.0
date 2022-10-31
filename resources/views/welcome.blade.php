@@ -155,7 +155,7 @@
                 </ul>
             </div>
         </button>
-        <div class="titulos">FLY<br>CAR</div>
+        <div class="titulos ">FLY<br>CAR</div>
         <div>IMAGEN SESION</div>
     </div>    
         {{-- --}}
