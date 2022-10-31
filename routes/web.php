@@ -117,3 +117,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+Route::get('/searchQuotation', function () {
+    return view('quotations.searchQuotation');
+})->name('searchQuotation');

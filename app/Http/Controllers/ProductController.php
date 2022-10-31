@@ -288,6 +288,9 @@ class ProductController extends Controller
         return redirect()->route('accesorios.buscar');
     }
     public function catalogo(){
+        //Elimino sessiones 
+        session()->forget(['vehiculo1', 'vehiculo2','accesorio1','accesoriosSelec', 'vehiculosSelec','quotation']);
+        ///
         $vehiculos = Vehicle::where('vehicleState', 'availabled')->get();
 
         return view('welcome', compact('vehiculos'));
