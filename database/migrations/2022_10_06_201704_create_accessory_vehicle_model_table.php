@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('accessory_id');
             $table->unsignedBigInteger('vehicle_model_id');
-            $table->float('price',)->default(3500.00);
+            $table->float('price',);
             $table->timestamps();
-            $table->foreign('accessory_id')->references('id')->on('accessories');
-            $table->foreign('vehicle_model_id')->references('id')->on('vehicle_models');
+            $table->foreign('accessory_id')->references('id')->on('accessories')->cascadeOnDelete();
+            $table->foreign('vehicle_model_id')->references('id')->on('vehicle_models')->cascadeOnDelete();
             $table->unique(['accessory_id', 'vehicle_model_id']);
         });
     }

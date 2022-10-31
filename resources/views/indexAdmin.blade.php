@@ -18,7 +18,8 @@
 <div class="mx-auto grid grid-cols-1">
     <div class="text-2xl font-semibold text-center">Productos</div><br>
     <a href="{{route('productos.create')}}"><button class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Crear Producto</button></a><br>
-    <a href="{{route('productos.buscar')}}"><button class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Buscar Producto</button></a>
+    <a href="{{route('vehiculos.buscar')}}"><button class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Buscar Vehiculos</button></a>
+    <a href="{{route('accesorios.buscar')}}"><button class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Buscar Accesorios</button></a>
 </div>
 <div class="mx-auto grid grid-cols-1">
     <div class="text-2xl font-semibold text-center">Ofertas</div><br>

@@ -18,7 +18,7 @@
             {{-- END NAVBAR --}}
         </div>
         <div class="titulos">CREAR PRODUCTOS</div>
-        <form action="{{ route('productos.store') }}" method="POST">
+        <form action="{{ route('productos.store') }}" method="POST" id="idFormulario">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2">
                 <div class="grid grid-cols-2">
@@ -38,7 +38,7 @@
                         Precio del producto:
                     </div>
                     <div class="py-1">
-                        <input type="number" id="idPrecioProd" min="1" name="precioP">
+                        <input type="number" id="idPrecioProd" min="1" step="0.01" name="precioP">
                     </div>
 
                     <div class="py-1">
@@ -119,25 +119,33 @@
                     <div class="py-1">
                         <div class="m-auto scroll-containerChico">
                             <ul class="border border-gray-200 rounded shadow-md" id="modelosSeleccionados">
+                                @php
+                                    $i =1;
+                                @endphp
                                 @foreach ($modelos as $modelo)
-                                    <li
-                                        class="px-4 py-2 bg-white hover:bg-sky-100 hover:text-sky-900 border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out">
-                                        {{ $modelo->name }} <input type="checkbox" id="{{ $modelo->id }}"
-                                            class="scrollModelos" value="{{ $modelo->id }}">
+                                    <li class="px-4 py-2 bg-white hover:bg-sky-100 hover:text-sky-900 border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out">
+                                        @php
+                                            echo $i;
+                                            $i=$i+1;
+                                        @endphp
+                                        . {{ $modelo->name }}
+                                        <input type="checkbox" id="{{ $modelo->id }}" class="scrollModelos" value="{{ $modelo->id }}" name="{{$modelo->id}}">
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
                     </div>
+                    <input type="hidden" id="modelosSelec" name="modelos">
 
-                    <div class="py-1 grid grid-cols-2" id="inputPrecios" name=""></div>
+                    <div class="py-1 grid grid-cols-2" id="inputPrecios">
+                    </div>
 
                 </div>
                 {{-- TERMINA TIPO ACCESORIO --}}
 
             </div>
             <div class="place-items-center grid grid-cols-1">
-                <button type="submit" class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Guardar producto</button>
+                <button id="botonCrear" type="button" class="rounded-xl bg-gray-600 font-semibold text-2xl py-6">Guardar producto</button>
             </div>
 
         </form>
@@ -156,6 +164,7 @@
                 } else {
                     $('#tipoVehiculo').hide();
                     $('#tipoAccesorio').show();
+                    $('#idPrecioProd').hide();
                 }
             });
         </script>
@@ -178,18 +187,31 @@
             })
         </script>
         <script>
+            
+            let valoresCheck = [];
             $("#modelosSeleccionados").on('click', function() {
-                let valoresCheck = [];
+                valoresCheck.length = 0;
                 $("input[type=checkbox]:checked").each(function() {
                     valoresCheck.push(this.value);
                 });
                 console.log(valoresCheck);
                 $('#inputPrecios').empty();
                 $.each(valoresCheck, function(i, value) {
-                    $('#inputPrecios').append('Precio del modelo ' + value + '<input type="number" id="' +
-                        value + ' name="modelo" class="h-7 w-20">');
+                    $('#inputPrecios').append('Precio del modelo'+ value +'<input type="number" id="modelo'+value+'" step="0.01" class="h-7 w-20">');
                 });
             });
+        </script>
+        <script>
+            let precios = "";
+            $('#botonCrear').on('click', function(){
+                valoresCheck.forEach(element => {
+                    
+                    precios+=element+'/'+$('#modelo'+element).val()+'|';
+                });
+                
+                $('#modelosSelec').val(precios);
+                $('#idFormulario').submit();
+            })
         </script>
 
         {{-- @vite(['resources/js/selectTipo.js']) --}}
