@@ -71,7 +71,7 @@
                 event.preventDefault();
                 toggleModal();
                 console.log(element.value);
-                modal.href = `ofertas/${element.value}`;
+                modal.href = `offers/${element.value}`;
             });
         });
 

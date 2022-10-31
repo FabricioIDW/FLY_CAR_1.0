@@ -16,12 +16,14 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexVehiculos()
     {
-        $accesorios = Accessory::all();
-        $vehiculos = Vehicle::all();
-        
-        return view('products.buscar', compact('accesorios', 'vehiculos'));
+        $vehiculos = Vehicle::where('removed','=','false')->get();
+        return view('products.buscarVehiculos', compact('vehiculos'));
+    }
+    public function indexAccesorios(){
+        $accesorios = Accessory::where('removed','=','false')->get();
+        return view('products.buscarAccesorios', compact('accesorios'));
     }
 
     public function searchV(Request $request){
@@ -31,6 +33,7 @@ class ProductController extends Controller
             join('vehicle_models', 'vehicle_models.id', '=','vehicles.vehicle_model_id')->
             join('brands', 'brands.id', '=', 'vehicle_models.brand_id')->
             where('brands.name', 'like', '%'.$request->searchV.'%')->
+            orWhere('removed','=','false')->
             orWhere('vehicle_models.name', 'like', '%'.$request->searchV.'%')->
             orWhere('vehicles.id', 'like', '%'.$request->searchV.'%')->
             get();   
@@ -94,6 +97,7 @@ class ProductController extends Controller
     public function searchA(Request $request){
         $output="";
         $accesorios=Accessory::where('id','Like','%'.$request->searchA.'%')->
+        orWhere('removed','=','false')->
         orWhere('stock','Like','%'.$request->searchA.'%')->
         orWhere('name','Like','%'.$request->searchA.'%')->
         get();
@@ -153,9 +157,8 @@ class ProductController extends Controller
     {
         $modelos = VehicleModel::all();
         $marcas = Brand::all();
-        $vehiculos = Vehicle::whereNotNull('offer_id');
 
-        return view('products/create', compact('modelos', 'vehiculos', 'marcas'));
+        return view('products/create', compact('modelos', 'marcas'));
     }
     public function modelsBrand(Request $request){
         $output="";
@@ -167,14 +170,6 @@ class ProductController extends Controller
         return response($output);
     }
 
-    // public function allModelos(Request $request){
-    //     $output = "";
-    //     $modelos = vehicleModel::all();
-    //     foreach($modelos as $model){
-    //         $output.=
-    //         '<li>'.$model->name.'</li>';
-    //     }
-    // }
 
     /**
      * Store a newly created resource in storage.
@@ -184,7 +179,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
         if($request->tProducto == 0){ // Producto tipo vehiculos
             $vehiculo = new Vehicle;
             $vehiculo->price = $request->precioP; 
@@ -195,52 +189,82 @@ class ProductController extends Controller
             $vehiculo->chassis = $request->chasisV;
             $vehiculo->image = $request->imgVehiculo;
             $vehiculo->save();
-            return redirect()->route('productos.buscar');
-
+            return redirect()->route('vehiculos.buscar');
         }else { //Producto tipo Accesorio
-            $accesorio = new Accessory;
-            $accesorio->price = $request->precioP; 
-            $accesorio->description = $request->descripcionP; 
-            $accesorio->enabled = $request->selectEstado;
-            $accesorio->name = $request->nombreA;
-            $accesorio->stock = $request->stock;
+            $accesorio = Accessory::create(['description'=>$request->descripcionProducto,
+                                    'enabled'=>$request->selectEstado,
+                                    'name'=>$request->nombreA,
+                                    'stock'=>$request->stock,
+                                    'image'=>"img",]);
             //Obtengo el precio de los modelos seleccionados
-            $precios[] = $request->input("modelo");
+            $preciosSeparados = explode('|',$request->modelos);
+            foreach ($preciosSeparados as $precioSep){
+                if( $precioSep != ""){
+                    $modelo = explode('/',$precioSep);
+                    $m = $modelo[0]; //id del modelo
+                    $p= $modelo[1]; //precio del accesorio para ese modelo
+                    $accesorio->models()->attach($m, ['price' => $p]);
+                }
+            }
+            return redirect()->route('accesorios.buscar');
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function editVehicle(Vehicle $vehiculo){
+        $marcas = Brand::all();
+        return view('products.editVehicle', compact('vehiculo', 'marcas'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function editAccesory(Accessory $accesorio){
+        $modelos = VehicleModel::all();
+        return view('products.editAccesory', compact('accesorio', 'modelos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function updateVehicle(Request $request,Vehicle $vehiculo)
     {
-        //
+        $vehiculo->chassis = $request->chassis;
+        $vehiculo->price = $request->precioP;
+        $vehiculo->description = $request->descripcionProducto;
+        $vehiculo->enabled = $request->selectEstado;
+        $vehiculo->vehicle_model_id = $request->modeloV;
+        $vehiculo->year = $request->anioV;
+        $vehiculo->image = $request->imgVehiculo;
+
+        $vehiculo->save();
+        return redirect()->view('vehiculos.buscar');
+
+    //     $file = $_FILES['file'][''.$vehiculo->image.''];
+        
+    //     if ($file != '') {
+    //         move_uploaded_file($_FILES['file']['tmp_name'], '/image/' . $file);
+    //     } else {
+    //         $file = $oldfile;
+    //     }
+    }
+
+    public function updateAccesory(Request $request,Accessory $accesorio) {
+        $accesorio->description = $request->descripcionProducto;
+        $accesorio->enabled = $request->selectEstado;
+        $accesorio->name = $request->nombreA;
+        $accesorio->stock = $request->stock;
+        $preciosS = explode('|', $request->modelos);
+        $i =0;
+        foreach ($preciosS as $precio){
+            if($precio != ""){
+                $modelo = explode('/', $precio);
+                $m = intval($modelo[0]); //id del modelo
+                $p= floatval($modelo[1]); //precio del accesorio para ese modelo
+                if(empty($accesorio->models[$i])){
+                    $accesorio->models()->attach($m, ['price' => $p]);
+                }else{
+                    $accesorio->models()->updateExistingPivot($m, ['price' => $p]);
+                }
+                $i++;            
+            }
+         }
+         $accesorio->save();
+
+        return redirect()->route('accesorios.buscar');
     }
 
     /**
@@ -249,13 +273,19 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy_vehicle($id)
+    public function destroyVehicle(Vehicle $vehiculo)
     {
-        //
+        $vehiculo->update([
+            'removed' => true,
+        ]);
+        return redirect()->route('vehiculos.buscar');
     }
-    public function destroy_accesory($id)
+    public function destroyAccesory(Accessory $accesorio)
     {
-        //
+        $accesorio->update([
+           'removed' => true,
+        ]);
+        return redirect()->route('accesorios.buscar');
     }
     public function catalogo(){
         $vehiculos = Vehicle::where('vehicleState', 'availabled')->get();
